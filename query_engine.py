@@ -13,7 +13,7 @@ from llama_index.retrievers.bm25 import BM25Retriever
 CHROMA_DIR  = "./chroma_db"
 COLLECTION  = "notesmind"
 EMBED_MODEL = "BAAI/bge-small-en-v1.5"
-LLM_MODEL = "llama3.2:1b"
+LLM_MODEL = "gemma3:270m"
 
 def load_query_engine():
     print("Loading embedding model...")
@@ -57,12 +57,10 @@ def load_query_engine():
     print("✓ Query engine ready!\n")
     return hybrid_retriever, reranker, nodes
 
-def chat(query: str, retriever, reranker, history: list) -> str:
-    # Step 1 — retrieve relevant chunks
-    nodes = retriever.retrieve(query)
-
-    # Step 2 — rerank
+def chat(query: str, retriever, reranker, history: list):
     from llama_index.core.schema import QueryBundle
+
+    nodes = retriever.retrieve(query)
     nodes = reranker.postprocess_nodes(nodes, query_bundle=QueryBundle(query))
 
     # remove duplicate chunks
@@ -73,34 +71,25 @@ def chat(query: str, retriever, reranker, history: list) -> str:
             unique.append(n)
     nodes = unique
 
-    # Step 3 — build context from top chunks
-    context = "\n\n---\n\n".join(
-    [f"[Source: {n.metadata.get('filename', 'unknown')}]\n{n.text}" for n in nodes]
-)
+    context = "\n\n---\n\n".join([n.text for n in nodes])
 
-    # Step 4 — build messages with history
-    system_prompt = (
-    "Answer the question using only the context below. "
-    "If the answer is not in the context, say you don't know."
-)
-    messages = [{"role": "system", "content": system_prompt}]
+    prompt = (
+        "Use the context below to answer the question. "
+        "Write 2-4 sentences in your own words. "
+        "If the context does not contain the answer, say you don't know.\n\n"
+        f"Context:\n{context}\n\n"
+        f"Question: {query}\n\n"
+        "Answer:"
+    )
 
-    # Add conversation history
-    for h in history[-6:]:   # keep last 3 exchanges
-        messages.append(h)
-
-    # Add current query with context
-    messages.append({
-        "role": "user",
-        "content": f"Context:\n{context}\n\nQuestion: {query}"
-    })
-
-    # Step 5 — call Ollama directly
     print("Thinking...")
-    response = ollama.chat(model=LLM_MODEL, messages=messages,options={"num_ctx": 2048})   
+    response = ollama.chat(
+        model=LLM_MODEL,
+        messages=[{"role": "user", "content": prompt}],
+        options={"num_ctx": 2048, "temperature": 0.3, "repeat_penalty": 1.2}
+    )
     answer = response["message"]["content"]
 
-    # Update history
     history.append({"role": "user", "content": query})
     history.append({"role": "assistant", "content": answer})
 

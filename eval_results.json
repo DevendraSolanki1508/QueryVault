@@ -1,0 +1,44 @@
+{
+  "summary": {
+    "avg_retrieval": 1.0,
+    "avg_answer": 0.4,
+    "avg_latency_s": 9.0
+  },
+  "results": [
+    {
+      "question": "What is the aim of Experiment 1?",
+      "retrieval_score": 1.0,
+      "answer_score": 0.0,
+      "latency_s": 10.8,
+      "answer": "10. Interface the hardware DSP 6713 Target Board to the Personal Computer and observe the \n                                                          "
+    },
+    {
+      "question": "What tools are required for Experiment 1?",
+      "retrieval_score": 1.0,
+      "answer_score": 1.0,
+      "latency_s": 6.8,
+      "answer": "The tools required for Experiment 1 are MATLAB IDE and MATLAB program."
+    },
+    {
+      "question": "What output does the discrete waveform program produce?",
+      "retrieval_score": 1.0,
+      "answer_score": 0.0,
+      "latency_s": 10.1,
+      "answer": "The discrete waveform program produces a continuous wave pattern.\n"
+    },
+    {
+      "question": "What are the lab rules about pen drives?",
+      "retrieval_score": 1.0,
+      "answer_score": 1.0,
+      "latency_s": 6.2,
+      "answer": "The lab rules regarding pen drives are as follows:\n1. The use of mobile/any other personal electronic gadgets is prohibited in the laboratory.\n2. Do not make noise in the Laboratory & do not sit on experiment table.\n3. Do not make loose connections and avoid overlapping wires.\n4. Don't switch on power supply without prior permission from the concerned staff.\n5. Never point/touch the CRO/Monitor screen with the tip of the open pen/pencil/any other sharp object.\n6. Never leave the experiments while in progress.\n7. Do not insert/use pen drive/any other storage devices into the CPU.\n"
+    },
+    {
+      "question": "What does the institute mission say about teamwork?",
+      "retrieval_score": 1.0,
+      "answer_score": 0.0,
+      "latency_s": 11.1,
+      "answer": "The institute's mission statement states that the institute aims to provide an environment that enhances creativity and Innovation in pursuit of Excellence.\n"
+    }
+  ]
+}
