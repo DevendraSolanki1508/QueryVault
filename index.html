@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NotesMind</title>
+    <title>QueryVault</title>
     <style>
         * {
             box-sizing: border-box;
@@ -272,7 +272,7 @@
 
     <div class="sidebar">
         <div>
-            <h1>🧠 NotesMind</h1>
+            <h1>🧠 QueryVault</h1>
             <p style="margin-top:6px">Chat with your documents — fully offline</p>
         </div>
         <div class="stat-box">
@@ -281,7 +281,7 @@
         </div>
         <div class="stat-box">
             <div class="stat-label">Model</div>
-            <div style="font-size:15px;font-weight:500;margin-top:4px">Mistral 7B</div>
+            <div style="font-size:15px;font-weight:500;margin-top:4px">Gemma 3 270M</div>
             <div style="font-size:12px;color:#888;margin-top:2px">via Ollama · fully offline</div>
         </div>
         <button class="clear-btn" onclick="clearChat()">🗑️ Clear conversation</button>
@@ -358,7 +358,7 @@
             container.scrollTop = container.scrollHeight;
 
             // Update thinking text
-            const texts = ['Searching documents...', 'Retrieving relevant chunks...', 'Reranking results...', 'Mistral is thinking...'];
+            const texts = ['Searching documents...', 'Retrieving relevant chunks...', 'Reranking results...', 'Gemma is thinking...'];
             let i = 0;
             return setInterval(() => {
                 i = (i + 1) % texts.length;
@@ -385,7 +385,7 @@
             btn.disabled = true;
 
             const interval = addThinking();
-            document.getElementById('status').textContent = '⏳ Mistral is generating a response — this may take 1-2 minutes on CPU...';
+            document.getElementById('status').textContent = '⏳ Gemma is generating a response — this may take 1-2 minutes on CPU...';
 
             try {
                 const r = await fetch('/ask', {
